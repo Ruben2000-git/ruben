@@ -117,12 +117,18 @@ def collect_group_posts(page, group_url, group_name):
     found = []
 
     page.goto(group_url)
-    page.wait_for_timeout(4000)
+    page.wait_for_timeout(6000)
+    try:
+        page.wait_for_selector('div[role="article"]', timeout=15000)
+    except Exception:
+        logger.warning("Группа '%s': лента не появилась за 15 секунд", group_name)
 
     # Прокручиваем страницу несколько раз, чтобы подгрузились новые посты.
-    for _ in range(6):
-        page.mouse.wheel(0, 3000)
-        page.wait_for_timeout(1500)
+    # Facebook подгружает посты постепенно при скролле, поэтому делаем
+    # больше итераций с более длинными паузами, чем для обычных сайтов.
+    for _ in range(15):
+        page.mouse.wheel(0, 2500)
+        page.wait_for_timeout(2500)
 
     # Facebook часто меняет вёрстку, поэтому ищем посты максимально широко:
     # каждый блок поста обычно содержит role="article".
