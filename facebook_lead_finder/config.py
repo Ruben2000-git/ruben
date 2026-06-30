@@ -24,7 +24,16 @@ HEADLESS = False
 # Вставьте сюда полные ссылки на группы, в которых вы УЖЕ состоите.
 # Пример: "https://www.facebook.com/groups/123456789012345/"
 FACEBOOK_GROUPS = [
-    # "https://www.facebook.com/groups/ПОДСТАВЬТЕ_ID_ГРУППЫ/",
+    "https://www.facebook.com/groups/wnybuyselltrade",
+    "https://www.facebook.com/groups/1164096468323677/",
+    "https://www.facebook.com/groups/256851142442942/",
+    "https://www.facebook.com/groups/454838724700234/",
+    "https://www.facebook.com/groups/406364223299384/",
+    "https://www.facebook.com/groups/507095466926196/",
+    "https://www.facebook.com/groups/1531519547076377/",
+    "https://www.facebook.com/groups/1219311431465828/",
+    "https://www.facebook.com/groups/1537933962923290/",
+    "https://www.facebook.com/groups/565678137847725/",
 ]
 
 # ---------- Ключевые слова для поиска лидов ----------
