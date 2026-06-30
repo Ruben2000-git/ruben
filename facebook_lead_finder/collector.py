@@ -31,10 +31,13 @@ def setup_logging():
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
-    # Дублируем в консоль, чтобы было видно прогресс при ручном запуске.
-    console = logging.StreamHandler()
-    console.setLevel(logging.INFO)
-    logging.getLogger("facebookleads").addHandler(console)
+    fb_logger = logging.getLogger("facebookleads")
+    # Не добавляем обработчик повторно, если он уже есть (например, run.py
+    # тоже вызывает setup_logging) - иначе каждая строка лога печатается дважды.
+    if not fb_logger.handlers:
+        console = logging.StreamHandler()
+        console.setLevel(logging.INFO)
+        fb_logger.addHandler(console)
 
 
 def post_matches_keywords(text):
@@ -122,6 +125,14 @@ def collect_group_posts(page, group_url, group_name):
         page.wait_for_selector('div[role="article"]', timeout=15000)
     except Exception:
         logger.warning("Группа '%s': лента не появилась за 15 секунд", group_name)
+
+    # Сохраняем скриншот страницы для отладки - если постов находится мало,
+    # можно открыть файл и увидеть, что реально показывает Facebook
+    # (например, требование снова войти в аккаунт).
+    try:
+        page.screenshot(path=f"debug_{group_name}.png")
+    except Exception:
+        pass
 
     # Прокручиваем страницу несколько раз, чтобы подгрузились новые посты.
     # Facebook подгружает посты постепенно при скролле, поэтому делаем

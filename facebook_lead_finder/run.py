@@ -26,9 +26,11 @@ def setup_logging():
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
-    console = logging.StreamHandler()
-    console.setLevel(logging.INFO)
-    logging.getLogger("facebookleads").addHandler(console)
+    fb_logger = logging.getLogger("facebookleads")
+    if not fb_logger.handlers:
+        console = logging.StreamHandler()
+        console.setLevel(logging.INFO)
+        fb_logger.addHandler(console)
 
 
 def scan_cycle():
